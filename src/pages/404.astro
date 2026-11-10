@@ -1,0 +1,14 @@
+---
+import ProjectLayout from "../layouts/ProjectLayout.astro";
+import { labProjects } from "../data/lab-projects";
+import { asset } from "../data/paths";
+import "../styles/accessibility.css";
+const project = labProjects[0];
+---
+<ProjectLayout title="Page not found" shortTitle={project.shortTitle} description="This address does not match a page on this research site." slug={project.slug} source="" nav={[]} bare>
+  <div class="a11y-page">
+    <h1>Page not found</h1>
+    <p>This address does not match a page on this research site.</p>
+    <p><a href={asset("")}>Go to {project.title}</a></p>
+  </div>
+</ProjectLayout>

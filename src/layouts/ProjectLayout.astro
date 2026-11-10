@@ -1,0 +1,37 @@
+---
+import "@fontsource-variable/ibm-plex-sans";
+import "../styles/project.css";
+import { asset } from "../data/paths";
+interface Props { title: string; shortTitle: string; description: string; slug: string; source: string; nav: { id: string; label: string; }[]; bare?: boolean; }
+const { title, shortTitle, description, slug, source, nav, bare = false } = Astro.props;
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#202020" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical && <><link rel="canonical" href={canonical} /><meta property="og:url" content={canonical} /></>}
+    <link rel="icon" type="image/svg+xml" sizes="any" href={asset(`projects/${slug}/favicon.svg`)} />
+    <title>{title} | Research project</title>
+  </head>
+  <body class:list={["project-page", { "architected-page": slug === "architected-structures", "healthy-page": slug === "digitaltwin_healthybuilding", "coastal-page": slug === "robotic-block-assembly", "surgery-page": slug === "agentic-robotics_surgeons", "school-page": slug === "disease-resistant-school-communities" }]}>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    {!bare && <header class="project-header">
+      <a class="project-wordmark" href={asset(`${slug}/`)}><img src={asset(`projects/${slug}/favicon.svg`)} alt="" aria-hidden="true" width="30" height="30" />{shortTitle}</a>
+      <nav aria-label="Project sections">{nav.map(item => <a href={`#${item.id}`}>{item.label}</a>)}</nav>
+    </header>}
+    <main id="main" tabindex="-1"><slot /></main>
+    {!bare && <footer class="project-footer">
+      <div><strong>{shortTitle}</strong><a href="#main">Back to top ↑</a></div>
+      <nav aria-label="Project resources"><a href="#sources">Project sources</a>{source && <a href={source}>Original research overview</a>}<a href={asset("accessibility/")}>Accessibility & media notes</a></nav>
+      <p>Original research and media credits are retained in the project sources.</p>
+    </footer>}
+  </body>
+</html>

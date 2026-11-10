@@ -1,0 +1,9 @@
+---
+import ProjectLayout from "../layouts/ProjectLayout.astro";
+import HealthyContent from "../components/projects/HealthyContent.astro";
+import { labProjects } from "../data/lab-projects";
+const project = labProjects[0];
+---
+<ProjectLayout title={project.title} shortTitle={project.shortTitle} description={project.description} slug={project.slug} source={project.source} nav={[]} bare>
+  <HealthyContent />
+</ProjectLayout>
